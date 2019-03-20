@@ -57,14 +57,10 @@
                 },
                 "examples" : {
                   "valid_ape" : {
-                    "value" : {
-                      "Status" : 0
-                    }
+                    "value" : "{\"status\": 0}"
                   },
                   "invalid_ape" : {
-                    "value" : {
-                      "Status" : 2
-                    }
+                    "value" : "{\"status\": 2}"
                   }
                 }
               }
