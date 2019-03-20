@@ -1,30 +1,37 @@
 openapi: 3.0.0
 info:
-  title: Evolia
-  description: Connection of Troops & Evolia
-  version: 1.0.0
+  version: '1.0.0'
+  title: 'Evolia'
+  description: 'Connection of Troops & Evolia'
+
+# Added by API Auto Mocking Plugin
 servers:
-- url: https://virtserver.swaggerhub.com/smartgammadev/Evolia/1.0.0
-  description: SwaggerHub API Auto Mocking
-- url: http://51.83.12.107
-  description: Evolia Server
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/smartgammadev/Evolia/1.0.0
+  - description: Evolia Server
+    url: http://51.83.12.107
+
 tags:
-- name: import
-  description: Import APIs
-  externalDocs:
-    description: Find out more
-    url: https://docs.google.com/document/d/1WsbQQEU6dxnQnvE74jsMTXzDErIzsaVYJDfje8qFlrg/edit?usp=sharing
+  - name: import
+    description: Import APIs
+    externalDocs:
+      description: Find out more
+      url: 'https://docs.google.com/document/d/1WsbQQEU6dxnQnvE74jsMTXzDErIzsaVYJDfje8qFlrg/edit?usp=sharing'
+
 paths:
   /TroopsEvolia/api/Customer/AddClientApi:
     post:
       tags:
-      - import
+        - import
       description: Import of Clients
       requestBody:
+        required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/Customer'
+            #example:
+            #  APE: 6201Z
             examples:
               valid_ape:
                 value:
@@ -32,26 +39,37 @@ paths:
               invalid_ape:
                 value:
                   APE: 11111
-        required: true
+
       responses:
-        200:
+        '200':
           description: Customer was imported
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/CustomerResponseStatus'
+              #example:
+              #  Status: 0
+              #  Errors: []
               examples:
                 valid_ape:
-                  value: '{"Status": "0", "Errors": []}'
+                  value: '{"Status": "0"}'
+                invalid_ape:
+                  value:
+                    Status: 2
+                    Errors:
+                      - ErrorId: 16
+                      - ErrorText: 'Pas de valeur de retour sur PS import customer (erreur interne) string message : ERROR;1;Code APE invalide dans Evolia : "strin";'
+
+
 components:
   schemas:
     Customer:
-      required:
-      - APE
-      - Matricule
-      - Nom
-      - NomCourt
       type: object
+      required:
+        - Matricule
+        - Nom
+        - NomCourt
+        - APE
       properties:
         Matricule:
           type: string
@@ -69,7 +87,7 @@ components:
           type: string
         Pays:
           type: string
-        Telephone:
+        Telephone :
           type: string
         Fax:
           type: string
