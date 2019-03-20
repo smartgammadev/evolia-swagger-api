@@ -1,0 +1,160 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "title" : "Evolia",
+    "description" : "Connection of Troops & Evolia",
+    "version" : "1.0.0"
+  },
+  "servers" : [ {
+    "url" : "https://virtserver.swaggerhub.com/smartgammadev/Evolia/1.0.0",
+    "description" : "SwaggerHub API Auto Mocking"
+  }, {
+    "url" : "http://51.83.12.107",
+    "description" : "Evolia Server"
+  } ],
+  "tags" : [ {
+    "name" : "import",
+    "description" : "Import APIs",
+    "externalDocs" : {
+      "description" : "Find out more",
+      "url" : "https://docs.google.com/document/d/1WsbQQEU6dxnQnvE74jsMTXzDErIzsaVYJDfje8qFlrg/edit?usp=sharing"
+    }
+  } ],
+  "paths" : {
+    "/TroopsEvolia/api/Customer/AddClientApi" : {
+      "post" : {
+        "tags" : [ "import" ],
+        "description" : "Import of Clients",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Customer"
+              },
+              "examples" : {
+                "valid_ape" : {
+                  "value" : {
+                    "APE" : "6201Z"
+                  }
+                },
+                "invalid_ape" : {
+                  "value" : {
+                    "APE" : 11111
+                  }
+                }
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Customer was imported",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CustomerResponseStatus"
+                },
+                "examples" : {
+                  "valid_ape" : {
+                    "value" : {
+                      "Status" : 0
+                    }
+                  },
+                  "invalid_ape" : {
+                    "value" : {
+                      "Status" : 2
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Customer" : {
+        "required" : [ "APE", "Matricule", "Nom", "NomCourt" ],
+        "type" : "object",
+        "properties" : {
+          "Matricule" : {
+            "type" : "string"
+          },
+          "Nom" : {
+            "type" : "string"
+          },
+          "NomCourt" : {
+            "type" : "string"
+          },
+          "Designation" : {
+            "type" : "string"
+          },
+          "Adresse1" : {
+            "type" : "string"
+          },
+          "CP" : {
+            "type" : "string"
+          },
+          "Commune" : {
+            "type" : "string"
+          },
+          "Pays" : {
+            "type" : "string"
+          },
+          "Telephone" : {
+            "type" : "string"
+          },
+          "Fax" : {
+            "type" : "string"
+          },
+          "Email" : {
+            "type" : "string"
+          },
+          "Web" : {
+            "type" : "string"
+          },
+          "APE" : {
+            "type" : "string"
+          },
+          "TVAClef" : {
+            "type" : "string"
+          },
+          "SIREN" : {
+            "type" : "string"
+          },
+          "NIC" : {
+            "type" : "string"
+          }
+        }
+      },
+      "CustomerResponseStatus" : {
+        "type" : "object",
+        "properties" : {
+          "Status" : {
+            "type" : "integer"
+          },
+          "Errors" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ResponseError"
+            }
+          }
+        }
+      },
+      "ResponseError" : {
+        "type" : "object",
+        "properties" : {
+          "ErrorId" : {
+            "type" : "integer"
+          },
+          "ErrorText" : {
+            "type" : "string"
+          }
+        }
+      }
+    }
+  }
+}
