@@ -82,9 +82,9 @@ paths:
               #  Status: 0
               #  Errors: []
               examples:
-                valid_ape:
+                valid_candidate:
                   value: '{"Status": 0}'
-                invalid_ape:
+                invalid_candidate:
                   value: '{"Status": 2, "Errors": [ { "ErrorId": 16, "Erreur à la connexion de la base avec le message : La conversion implicite du type de données varchar en varbinary nest pas autorisée. Utilisez la fonction CONVERT pour exécuter cette requête."}]}'
 
 components:
