@@ -53,7 +53,40 @@ paths:
                   value: '{"Status": 0}'
                 invalid_ape:
                   value: '{"Status": 2, "Errors": [ { "ErrorId": 16, "ErrorText": "Pas de valeur de retour sur PS import customer (erreur interne) string message : ERROR;1;Code APE invalide dans Evolia : \"strin\";"}]}'
-                #  value: '{"Status": 2}'
+
+  /TroopsEvolia/api/Candidate/AddCandidatApi:
+    post:
+      tags:
+        - import
+      description: Import of Candidates
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Candidate'
+            examples:
+              valid_candidate:
+                value: '{"Titre": "1","Nom": "Test", "ListeAgencesSemiColon": "123"}'
+              invalid_candidate:
+                value: '{"Titre": "1","Nom": "Test", "ListeAgencesSemiColon": "zzz"}'
+
+      responses:
+        '200':
+          description: Candidate was imported
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CandidateResponseStatus'
+              #example:
+              #  Status: 0
+              #  Errors: []
+              examples:
+                valid_ape:
+                  value: '{"Status": 0}'
+                invalid_ape:
+                  value: '{"Status": 2, "Errors": [ { "ErrorId": 16, "Erreur à la connexion de la base avec le message : La conversion implicite du type de données varchar en varbinary nest pas autorisée. Utilisez la fonction CONVERT pour exécuter cette requête."}]}'
+
 components:
   schemas:
     Customer:
@@ -96,6 +129,97 @@ components:
           type: string
         NIC:
           type: string
+
+    Candidate:
+      type: object
+      required:
+        - Titres
+        - Nom
+        - ListeAgencesSemiColon
+      properties:
+        Titres:
+          type: integer
+          enum:  [1, 2, 3]
+          description: Value 1 for Sir, 2 for Madam, 3 for Miss
+        #TitreLibre:
+        #  type: string
+        Nom:
+          type: string
+          example: Test
+        Prenom:
+          type: string
+          example: Tester
+        IdRef:
+          type: string
+        Qualification:
+          type: string
+        Nationalite:
+          type: string
+        NomJF:
+          type: string
+        DateNaissance:
+          type: string
+          description: DateTime format 01/01/1970 00:00:00
+          example: 01/01/1980 00:00:00
+        TelephonePortable:
+          type: string
+        TelephoneDomicile:
+          type: string
+        Email:
+          type: string
+          example: candidate@test.com
+        Web:
+          type: string
+        NumVoie:
+          type: string
+        BisVoie:
+          type: string
+        NomVoie:
+          type: string
+        CompVoie:
+          type: string
+        CP:
+          type: string
+        Commune:
+          type: string
+        Numsecu:
+          type: string
+        NumsecuCle:
+          type: string
+        Lieu_Naiss:
+          type: string
+        PaysNaiss:
+          type: string
+        Pays:
+          type: string
+        Commentaire:
+          type: string
+        #IdArchive:
+        #  type: integer
+        ModePaiement:
+          type: string
+        RIB_Etablissement:
+          type: string
+        RIB_Domiciliation:
+          type: string
+        RIB_Titulaire:
+          type: string
+        RIB_Guichet:
+          type: string
+        RIB_Compte:
+          type: string
+        RIB_Cle:
+          type: string
+        IBAN:
+          type: string
+        BIC:
+          type: string
+        CreePar:
+          type: string
+          description: Indication about the creator of the interim
+        ListeAgencesSemiColon:
+          type: string
+
     CustomerResponseStatus:
       type: object
       properties:
@@ -105,6 +229,17 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ResponseError'
+
+    CandidateResponseStatus:
+      type: object
+      properties:
+        Status:
+          type: integer
+        Errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResponseError'
+
     ResponseError:
       type: object
       properties:
